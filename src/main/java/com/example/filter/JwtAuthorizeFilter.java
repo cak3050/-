@@ -2,6 +2,7 @@ package com.example.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.config.SecurityConfiguration;
+import com.example.utils.Const;
 import com.example.utils.JWTUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -36,6 +37,7 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);//这段代码创建了一个UsernamePasswordAuthenticationToken对象，
             // 将用户信息、权限信息添加到该对象中，然后使用setDetails方法添加了关于认证请求的详细信息，
             // 最后将该认证对象存储在SecurityContextHolder的上下文中。
+            request.setAttribute(Const.ATTR_USER_ID,utils.toId(jwt));
         }
         filterChain.doFilter(request,response);
 
